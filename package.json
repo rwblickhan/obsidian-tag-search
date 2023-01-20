@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "obsidian-tag-search",
+	"version": "0.1.0",
+	"description": "Search for your tags!",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

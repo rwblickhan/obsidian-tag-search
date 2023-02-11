@@ -1,4 +1,4 @@
-import { App, Plugin, FuzzySuggestModal, getAllTags, Modal } from "obsidian";
+import { App, Plugin, FuzzySuggestModal, getAllTags, Notice } from "obsidian";
 
 export default class TagSearchPlugin extends Plugin {
 	async onload() {
@@ -16,7 +16,7 @@ export default class TagSearchPlugin extends Plugin {
 				if (searchPlugin && searchPlugin.instance) {
 					new TagSearchModal(this.app, search).open();
 				} else {
-					new UnsupportedTagSearchModel(this.app).open();
+					new Notice("Please enable the search core plugin!");
 				}
 			},
 		});
@@ -38,7 +38,7 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 	}
 
 	getItems(): string[] {
-		const files = app.vault.getAllLoadedFiles();
+		const files = app.vault.getMarkdownFiles();
 		const itemSet = new Set<string>();
 		for (const file of files) {
 			const cache = app.metadataCache.getCache(file.path);
@@ -58,21 +58,5 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 
 	onChooseItem(item: string, evt: MouseEvent | KeyboardEvent): void {
 		this.search.openGlobalSearch(`tag:${item}`);
-	}
-}
-
-class UnsupportedTagSearchModel extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.setText("Please enable the search core plugin!");
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
 	}
 }

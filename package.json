@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-tag-search",
-	"version": "1.0.1",
+	"name": "tag-search",
+	"version": "1.0.2",
 	"description": "Fuzzy-find your tags!",
 	"main": "main.js",
 	"scripts": {

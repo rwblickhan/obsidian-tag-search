@@ -27,12 +27,11 @@ export default class TagSearchPlugin extends Plugin {
 
 interface Search {
 	openGlobalSearch(_: string): void;
+	getGlobalSearchQuery(): string;
 }
 
 class TagSearchModal extends FuzzySuggestModal<string> {
-	search: Search;
-
-	constructor(app: App, search: Search) {
+	constructor(public app: App, private search: Search) {
 		super(app);
 		this.search = search;
 	}
@@ -57,6 +56,38 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 	}
 
 	onChooseItem(item: string, evt: MouseEvent | KeyboardEvent): void {
-		this.search.openGlobalSearch(`tag:${item}`);
+		const toggle = evt.ctrlKey || evt.metaKey;
+		const negate = evt.shiftKey;
+
+		const defaultTagSearchString = `tag:${item}`;
+		const negatedTagSearchString = `-tag:${item}`;
+		const tagSearchString = negate
+			? negatedTagSearchString
+			: defaultTagSearchString;
+
+		if (toggle) {
+			let query = this.search.getGlobalSearchQuery();
+			let needsNewTagSearchString = false;
+
+			if (negate && !query.includes(negatedTagSearchString)) {
+				needsNewTagSearchString = true;
+			}
+			query = query.replaceAll(negatedTagSearchString, "");
+
+			if (!negate && !query.includes(defaultTagSearchString)) {
+				needsNewTagSearchString = true;
+			}
+			query = query.replaceAll(defaultTagSearchString, "");
+
+			if (needsNewTagSearchString) {
+				this.search.openGlobalSearch(
+					query.concat(query.length === 0 ? "" : " ", tagSearchString)
+				);
+			} else {
+				this.search.openGlobalSearch(query);
+			}
+		} else {
+			this.search.openGlobalSearch(tagSearchString);
+		}
 	}
 }

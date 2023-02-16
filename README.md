@@ -14,9 +14,9 @@ Press Cmd or Ctrl to append the selection to the current search, just like the t
 Press Shift to negate the search (`-tag:`).
 You can also combine Cmd/Ctrl and Shift to append a negated search.
 
-## Install
+## Installation
 
-Search for Tag Search in the Community Plugins section of settings.
+Search for Tag Search in the Community Plugins section of Obsidian settings.
 Alternatively, [click here](https://obsidian-plugins.peak-dev.org/show/tag-search) to install it to your most recently used vault.
 
 ## See Also

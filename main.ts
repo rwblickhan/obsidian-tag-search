@@ -36,6 +36,18 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 		this.search = search;
 	}
 
+	onOpen(): void {
+		super.onOpen();
+		this.inputEl.addEventListener("keydown", (ev: KeyboardEvent) => {
+			this.maybeChooseFirstSuggestion(ev);
+		});
+	}
+
+	onClose(): void {
+		super.onClose();
+		this.inputEl.removeEventListener("keydown", (ev: KeyboardEvent) => {});
+	}
+
 	getItems(): string[] {
 		const files = app.vault.getMarkdownFiles();
 		const itemSet = new Set<string>();
@@ -88,6 +100,20 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 			}
 		} else {
 			this.search.openGlobalSearch(tagSearchString);
+		}
+	}
+
+	private maybeChooseFirstSuggestion(evt: KeyboardEvent) {
+		const toggle = evt.ctrlKey || evt.metaKey;
+		const negate = evt.shiftKey;
+		// "Enter"-only case is handled by FuzzySuggestModal already
+		if (evt.key === "Enter" && (toggle || negate)) {
+			const suggestions = this.getSuggestions(this.inputEl.value);
+			const choice = suggestions.first()?.item;
+			if (choice != null) {
+				this.close();
+				this.onChooseItem(choice, evt);
+			}
 		}
 	}
 }

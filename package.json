@@ -1,6 +1,6 @@
 {
 	"name": "tag-search",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Fuzzy-find your tags!",
 	"main": "main.js",
 	"scripts": {

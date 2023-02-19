@@ -108,8 +108,10 @@ class TagSearchModal extends FuzzySuggestModal<string> {
 		const negate = evt.shiftKey;
 		// "Enter"-only case is handled by FuzzySuggestModal already
 		if (evt.key === "Enter" && (toggle || negate)) {
-			const suggestions = this.getSuggestions(this.inputEl.value);
-			const choice = suggestions.first()?.item;
+			const choice =
+				this.resultContainerEl
+					.getElementsByClassName("is-selected")
+					.item(0)?.textContent ?? null;
 			if (choice != null) {
 				this.close();
 				this.onChooseItem(choice, evt);

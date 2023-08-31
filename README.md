@@ -1,5 +1,8 @@
 # Obsidian Tag Search
 
+> [!NOTE]
+> As of [Obsidian v.1.4.5](https://obsidian.md/changelog/2023-08-31-desktop-v1.4.5/), tags now autocomplete in the search pane! So you can probably use that instead of this plugin 🙂
+
 Fuzzy-find your tags!
 
 Do you have a lot of tags? Is opening the tag pane and scanning an alphabetical list of tags an annoyance? Then this Obsidian plugin might be for you.
